@@ -3,13 +3,13 @@ name: Build macOS App
 on:
   push:
     branches: [ "main", "master" ]
-  workflow_dispatch:
+  workflow_dispatch: # 允许你手动点击按钮编译
 
 jobs:
   build:
     runs-on: macos-latest
     env:
-      # 提前适配 Node.js 24 警告
+      # 适配 2026 年的 Node 24 要求
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
@@ -21,18 +21,18 @@ jobs:
 
       - name: Build Touch Up Core Framework
         run: |
-          # 该项目依赖于 Touch Up Core 框架，需先确保它被编译或作为依赖处理
+          # 修复点：将 CLEAN 改为小写 clean
           xcodebuild -project "Touch Up.xcodeproj" \
                      -scheme "Touch Up Core" \
                      -configuration Release \
                      -derivedDataPath BuildData \
                      CODE_SIGNING_ALLOWED=NO \
                      CODE_SIGNING_REQUIRED=NO \
-                     CLEAN build
+                     clean build
 
       - name: Build Main App
         run: |
-          # 编译主应用
+          # 编译主程序
           xcodebuild -project "Touch Up.xcodeproj" \
                      -scheme "Touch Up" \
                      -configuration Release \
@@ -43,10 +43,8 @@ jobs:
 
       - name: Package App
         run: |
-          # 定位产物：注意 Touch-Up 的产物目录可能包含空格
+          # 进入产物目录并打包
           cd BuildData/Build/Products/Release
-          # 移除可能存在的旧压缩包
-          rm -f ../../../Touch-Up-Mac.zip
           zip -r ../../../Touch-Up-Mac.zip "Touch Up.app"
 
       - name: Upload Artifact
