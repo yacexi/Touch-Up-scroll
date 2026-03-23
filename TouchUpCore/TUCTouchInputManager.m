@@ -260,13 +260,14 @@
                 // 2. 设定阈值 (单位通常是像素或点)
                 // 建议初次尝试设定为 2.0 到 5.0 之间。
                 // 值越大，越不容易触发 Pinch（缩放），越容易触发滚动。
-                CGFloat pinchThreshold = [[NSDate date] timeIntervalSinceDate:self.cursorTouchStationarySinceDate];
+                CGFloat pinchThreshold = 2.0;
+                // [[NSDate date] timeIntervalSinceDate:self.cursorTouchStationarySinceDate];
                 
                 if (   !CGPointEqualToPoint(trajectoryA, CGPointZero)
-                    && !CGPointEqualToPoint(trajectoryB, CGPointZero)
-                    && movementDifference > pinchThreshold) {
+                    && !CGPointEqualToPoint(trajectoryB, CGPointZero)) {
                     
-                    if (!CGPointEqualToPoint(trajectoryA, trajectoryB)) {
+                    if (!CGPointEqualToPoint(trajectoryA, trajectoryB)
+                    && movementDifference > pinchThreshold) {
                         self.identifiedMultitouchGesture = TUCCursorGesturePinch;
                     }
                     else {
