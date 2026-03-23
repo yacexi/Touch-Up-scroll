@@ -258,9 +258,9 @@
                     if (!CGPointEqualToPoint(trajectoryA, trajectoryB)) {
                         self.identifiedMultitouchGesture = TUCCursorGesturePinch;
                     }
-//                    else {
-//                        self.identifiedMultitouchGesture = TUCCursorGestureTwoFingerDrag;
-//                    }
+                    else {
+                        self.identifiedMultitouchGesture = TUCCursorGestureTwoFingerDrag;
+                    }
                 }
                 
             } else {
