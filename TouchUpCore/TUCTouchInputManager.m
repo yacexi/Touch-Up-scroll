@@ -380,6 +380,14 @@
             [utils scroll:translation phase:touch.phase];
             
             break; }
+
+        case TUCCursorActionScrollReverse: {
+            CGPoint prevLocation = [self convertScreenPointRelativeToAbsolute:touch.previousLocation];
+            CGPoint translation = CGPointMake(prevLocation.x - screenLocation.x,
+                                              prevLocation.y - screenLocation.y);
+            [utils scroll:translation phase:touch.phase];
+            
+            break; }
             
         case TUCCursorActionMagnify:
             [utils magnifyLocationA:screenLocation
