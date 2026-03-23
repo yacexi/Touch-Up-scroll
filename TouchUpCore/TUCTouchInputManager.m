@@ -406,8 +406,8 @@
         case TUCCursorGestureLongPress:         return TUCCursorActionClick;
         case TUCCursorGestureDrag:              return TUCCursorActionScroll;
         case TUCCursorGestureHoldAndDrag:       return TUCCursorActionDrag;
-        case TUCCursorGestureTapSecondFinger:   return TUCCursorActionSecondaryClick;
-        case TUCCursorGestureTwoFingerDrag:     return TUCCursorActionDrag;
+        case TUCCursorGestureTapSecondFinger:   return TUCCursorActionNone;
+        case TUCCursorGestureTwoFingerDrag:     return TUCCursorActionScroll;
             
         case TUCCursorGesturePinch:             return TUCCursorActionMagnify;
         case _TUCCursorGestureNone:             return TUCCursorActionNone;
