@@ -250,10 +250,21 @@
             if (self.gestureAdditionalTouch.isActive) {
                 CGPoint trajectoryA = [cursorTouch trajectorySign];
                 CGPoint trajectoryB = [otherTouch trajectorySign];
+
+                // 1. 计算两个手指移动向量的差异
+                // 这里计算向量 A 和向量 B 的欧几里得距离差
+                CGFloat deltaX = trajectoryA.x - trajectoryB.x;
+                CGFloat deltaY = trajectoryA.y - trajectoryB.y;
+                CGFloat movementDifference = sqrt(deltaX * deltaX + deltaY * deltaY);
                 
+                // 2. 设定阈值 (单位通常是像素或点)
+                // 建议初次尝试设定为 2.0 到 5.0 之间。
+                // 值越大，越不容易触发 Pinch（缩放），越容易触发滚动。
+                CGFloat pinchThreshold = [[NSDate date] timeIntervalSinceDate:self.cursorTouchStationarySinceDate];
                 
                 if (   !CGPointEqualToPoint(trajectoryA, CGPointZero)
-                    && !CGPointEqualToPoint(trajectoryB, CGPointZero)) {
+                    && !CGPointEqualToPoint(trajectoryB, CGPointZero)
+                    && movementDifference > pinchThreshold) {
                     
                     if (!CGPointEqualToPoint(trajectoryA, trajectoryB)) {
                         self.identifiedMultitouchGesture = TUCCursorGesturePinch;
